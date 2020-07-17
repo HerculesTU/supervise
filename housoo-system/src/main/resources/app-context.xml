@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="app-resources.xml"/>
+    <import resource="app-ehcache.xml"/>
+    <import resource="app-redis.xml"/>
+    <import resource="app-email.xml"/>
+    <!-- 引入ActiveMQ中间件 -->
+    <import resource="app-activemq.xml"/>
+    <!-- 引入RabbitMQ中间件 -->
+    <!--<import resource="app-rabbitmq.xml"/>-->
+    <!-- 引入KafkaMQ中间件 -->
+    <!--<import resource="app-kafka.xml"/>-->
+</beans>

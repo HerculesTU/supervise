@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+        http://www.springframework.org/schema/jms  
+        http://www.springframework.org/schema/jms/spring-jms.xsd  
+        http://activemq.apache.org/schema/core  
+         http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <!-- ActiveMQ 连接工厂 -->
+    <!-- 如果连接网络：tcp://ip:61616；未连接网络：tcp://localhost:61616 以及用户名，密码-->
+    <!--<amq:connectionFactory id="amqConnectionFactory"
+                           brokerURL="tcp://192.168.1.140:61616"
+                           userName="bhz"
+                           password="bhz"/>-->
+    <amq:connectionFactory id="amqConnectionFactory"
+                           brokerURL="tcp://192.168.1.140:61616"/>
+
+    <!-- 配置JMS连接工厂 -->
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.CachingConnectionFactory">
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <constructor-arg ref="amqConnectionFactory"/>
+        <!-- Session缓存数量 -->
+        <property name="sessionCacheSize" value="100"/>
+    </bean>
+
+    <!-- 定义消息队列（Queue，一对一） -->
+    <bean id="commonQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <!-- 设置消息队列的名字 -->
+        <constructor-arg>
+            <value>queue</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 定义消息队列（Topic，一对多） -->
+    <bean id="commonTopicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg>
+            <value>topic</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- Spring JmsTemplate 的消息生产者 start-->
+    <!-- 定义JmsTemplate的Queue类型 -->
+    <!-- 配置JMS模板（Queue），Spring提供的JMS工具类，它发送、接收消息。 -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestination" ref="commonQueueDestination"/>
+        <property name="receiveTimeout" value="10000"/>
+        <!-- 非pub/sub模型（发布/订阅），即队列模式 -->
+        <!-- true是topic，false是queue，默认是false，此处设置为false -->
+        <property name="pubSubDomain" value="false"/>
+        <!-- NON_PERSISTENT非持久化 1 ，PERSISTENT持久化 2 -->
+        <property name="deliveryMode" value="1"></property>
+        <!-- 启用事务
+        <property name="sessionTransacted" value="true"></property> -->
+        <!-- 自动启用事务：AUTO_ACKNOWLEDGE  客户端签收:CLIENT_ACKNOWLEDGE
+        <property name="sessionAcknowledgeModeName" value="CLIENT_ACKNOWLEDGE"/>
+        -->
+    </bean>
+
+    <!-- 定义JmsTemplate的Topic类型 -->
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
+        <constructor-arg ref="connectionFactory"/>
+        <property name="defaultDestination" ref="commonTopicDestination"/>
+        <!-- pub/sub模型（发布/订阅） -->
+        <property name="pubSubDomain" value="true"/>
+        <!-- NON_PERSISTENT非持久化 1 ，PERSISTENT持久化 2 -->
+        <property name="deliveryMode" value="1"></property>
+        <!-- 启用事务
+        <property name="sessionTransacted" value="true"></property> -->
+        <!-- 自动启用事务：AUTO_ACKNOWLEDGE  客户端签收:CLIENT_ACKNOWLEDGE
+        <property name="sessionAcknowledgeModeName" value="CLIENT_ACKNOWLEDGE"/>
+        -->
+    </bean>
+    <!--Spring JmsTemplate 的消息生产者 end-->
+
+    <!-- 消息消费者 start   -->
+    <!-- 简单队列消息消费者-->
+    <bean id="commonQueueReceiver" class="com.housoo.platform.system.listener.CommonQueueReceiver"></bean>
+    <jms:listener-container destination-type="queue" container-type="default"
+                            connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="platQueue" ref="commonQueueReceiver"/>
+    </jms:listener-container>
+    <!-- 复杂队列消息消费者-->
+    <bean id="complexQueueReceiver" class="com.housoo.platform.system.listener.ComplexQueueReceiver"></bean>
+    <jms:listener-container destination-type="queue" container-type="default"
+                            connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="complexPlatQueue" ref="complexQueueReceiver"/>
+    </jms:listener-container>
+
+    <!-- 简单订阅消息消费者-->
+    <bean id="commonTopicReceiver" class="com.housoo.platform.system.listener.CommonTopicReceiver"></bean>
+    <jms:listener-container destination-type="topic" container-type="default"
+                            connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="platTopic" ref="commonTopicReceiver"/>
+    </jms:listener-container>
+    <!-- 复杂订阅消息消费者-->
+    <bean id="complexTopicReceiver" class="com.housoo.platform.system.listener.ComplexTopicReceiver"></bean>
+    <jms:listener-container destination-type="topic" container-type="default"
+                            connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="complexPlatTopic" ref="complexTopicReceiver"/>
+    </jms:listener-container>
+    <!-- 消息消费者 end -->
+
+</beans>

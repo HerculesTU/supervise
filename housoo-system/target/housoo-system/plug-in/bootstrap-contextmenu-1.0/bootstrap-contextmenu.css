@@ -1,0 +1,18 @@
+div#ztreeRightMenu {
+    position: absolute;
+    visibility: hidden;
+    top: 0;
+    text-align: left;
+    padding: 2px;
+}
+
+.dropdown-menu>li>a:focus,.dropdown-menu>li>a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+div#ztreeRightMenu ul li {
+    margin: 1px 0;
+    padding: 0 5px;
+    cursor: pointer;
+}

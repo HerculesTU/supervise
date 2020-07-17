@@ -1,0 +1,259 @@
+@charset "utf-8";
+.tableWrap {
+    width: 600px;
+    box-sizing: border-box;
+}
+
+.table-thead {
+    width: auto;
+    font-size: 14px;
+    background-color: #FFF;
+    border: 1px solid #CFCFCF;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.table-thead tr th {
+    text-align: left;
+    padding-left: 10px;
+    border-right: 1px solid #CFCFCF;
+}
+
+.table-thead tr th:last-child, .table-thead tr th:nth-last-child(2) {
+    border-right: 0;
+}
+
+.table-thead tr, .table-tbody tr {
+    height: 35px;
+}
+
+.table-tbody {
+    width: auto;
+    font-size: 14px;
+    background-color: #FFF;
+    border-left: 1px solid #CFCFCF;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.table-tbody tr {
+    border-bottom: 1px solid #CFCFCF;
+}
+
+.table-tbody tr:last-child {
+    border-bottom: 0;
+}
+
+.table-tbody tr td {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #CFCFCF;
+}
+
+.comTbody {
+    width: auto;
+    display: inline-block;
+    max-height: 100px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #CFCFCF;
+}
+
+.table-wrap {
+    width: 100%;
+    outline: none;
+    position: relative;
+    font-size: 14px;
+    color: #444;
+}
+
+.table-head {
+    padding-right: 8px;
+    background-color: #ffffff;
+}
+
+.table-head-wrap {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid {
+    margin: 0px;
+    table-layout: fixed;
+    width: 100%;
+    max-width: none;
+    border-spacing: 0px;
+    empty-cells: show;
+    border-width: 0px;
+    outline: 0px none;
+    border-collapse: collapse;
+    border-bottom: 1px solid #f0e7e6;
+}
+
+.grid tr th {
+    padding: 0.8em 0.5em;
+    overflow: hidden;
+    font-weight: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 16px;
+    border-right: 1px solid #f0e7e6;
+    border-bottom: 1px solid #f0e7e6;
+}
+
+.grid tr td {
+    line-height: 36px;
+    text-align: center;
+    border-right: 1px solid #f0e7e6;
+    border-bottom: 1px solid #f0e7e6;
+}
+
+.grid tr td:first-child {
+    border-top: 0px;
+}
+
+.grid tr:last-child td {
+    border-bottom: none;
+}
+
+.tab-link {
+    display: block;
+    min-height: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #573e41;
+    font-size: 16px;
+    text-align: center;
+}
+
+.table-content {
+    height: 180px;
+    white-space: normal;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.table-content.bj_list {
+    height: 231px;
+}
+
+.data-grid {
+    width: 698px;
+    height: 201px;
+    position: relative;
+    overflow: hidden;
+    font-size: 14px;
+    color: #444;
+    box-sizing: border-box;
+    border-color: #95B8E7;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.data-view {
+    width: 698px;
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    right: 0px;
+}
+
+.grid-head {
+    width: 698px;
+    height: 30px;
+    border-color: #DDD;
+    overflow: hidden;
+    cursor: default;
+    border-width: 0px 0px 1px;
+    border-style: solid;
+    background-color: #efefef;
+}
+
+.grid-head-inner {
+    display: block;
+    float: left;
+}
+
+.data-table {
+    height: 30px;
+    border-collapse: separate;
+}
+
+.data-table-row {
+    height: 30px;
+}
+
+.data-table td {
+    border-color: #CCC;
+    border-width: 0px 1px 1px 0px;
+    border-style: dotted;
+    margin: 0px;
+    padding: 0px;
+    line-height: 1.65em;
+}
+
+.datagrid-cell {
+    margin: 0px;
+    padding: 0px 4px;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+    height: 18px;
+    line-height: 18px;
+    font-size: 12px;
+}
+
+.cell-c1 {
+    width: 79px;
+    height: auto;
+}
+
+.cell-c2 {
+    width: 99px;
+    height: auto;
+}
+
+.cell-c3 {
+    width: 85px;
+    height: auto;
+    text-align: right;
+}
+
+.cell-c4 {
+    width: 100px;
+    height: auto;
+    text-align: right;
+}
+
+.cell-c5 {
+    width: 200px;
+    height: auto;
+}
+
+.grid-body {
+    width: 698px;
+    height: 168px;
+    overflow-x: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+
+.datagrid-btable {
+    border-collapse: separate;
+}
+
+.datagrid-btable tr {
+    height: 25px;
+}
+
+.datagrid-btable tr td {
+    border-color: #CCC;
+    border-width: 0px 1px 1px 0px;
+    border-style: dotted;
+    margin: 0px;
+    padding: 0px;
+}

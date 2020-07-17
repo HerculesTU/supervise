@@ -1,0 +1,6 @@
+com\housoo\platform\chatonline\controller\ChatOnlineController.class
+com\housoo\platform\chatonline\service\impl\UserGroupServiceImpl.class
+com\housoo\platform\chatonline\dao\UserGroupDao.class
+com\housoo\platform\chatonline\dao\impl\UserGroupDaoImpl.class
+com\housoo\platform\chatonline\service\UserGroupService.class
+com\housoo\platform\chatonline\controller\UserGroupController.class

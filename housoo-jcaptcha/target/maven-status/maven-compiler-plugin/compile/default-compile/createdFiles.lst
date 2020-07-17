@@ -1,0 +1,14 @@
+com\housoo\platform\jcaptcha\base\Randoms.class
+com\housoo\platform\jcaptcha\utils\GifEncoder.class
+com\housoo\platform\jcaptcha\utils\Quant.class
+com\housoo\platform\jcaptcha\controller\ChineseCaptcha.class
+com\housoo\platform\jcaptcha\utils\CaptchaUtil.class
+com\housoo\platform\jcaptcha\controller\ChineseGifCaptcha.class
+com\housoo\platform\jcaptcha\base\Captcha.class
+com\housoo\platform\jcaptcha\controller\GifCaptcha.class
+com\housoo\platform\jcaptcha\utils\Encoder.class
+com\housoo\platform\jcaptcha\controller\SpecCaptcha.class
+com\housoo\platform\jcaptcha\controller\ImageCaptchaController.class
+com\housoo\platform\jcaptcha\base\ChineseCaptchaAbstract.class
+com\housoo\platform\jcaptcha\controller\ArithmeticCaptcha.class
+com\housoo\platform\jcaptcha\base\ArithmeticCaptchaAbstract.class

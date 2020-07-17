@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/rabbit
+    http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd">
+
+    <description>rabbitmq 连接服务配置</description>
+    <!-- 连接配置，指定连接rabbit server参数  -->
+    <rabbit:connection-factory id="rabbitMqConnectionFactory"
+                               host="192.168.1.30"
+                               username="admin"
+                               password="123456"
+                               port="5672"
+                               virtual-host="/"/><!-- virtual-host="/"是默认的虚拟机路径 -->
+    <rabbit:admin connection-factory="rabbitMqConnectionFactory"/>
+
+    <!-- spring template声明 给模板指定转换器 -->
+    <rabbit:template id="rabbitTemplate"
+                     connection-factory="rabbitMqConnectionFactory"
+                     confirm-callback="" return-callback="" mandatory=""
+                     message-converter="jsonMessageConverter"/>
+
+    <!-- 消息对象json转换类 -->
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
+
+    <!-- 声明一个简单队列（一对一） -->
+    <rabbit:queue id="simpleQueue" name="simpleQueue" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 声明一个工作队列（一对多） -->
+    <rabbit:queue id="workQueue" name="workQueue" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 声明一个路由队列（路由模式） -->
+    <rabbit:queue id="directQueue" name="directQueue" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 声明一个主题队列（主题模式） -->
+    <rabbit:queue id="topicQueue" name="topicQueue" durable="true" auto-delete="false" exclusive="false"/>
+    <!-- 声明一个发布订阅队列（发布订阅队列） -->
+    <rabbit:queue id="pubSubQueue" name="pubSubQueue" durable="true" auto-delete="false" exclusive="false"/>
+
+
+    <!-- 路由模式交换器定义 -->
+    <rabbit:direct-exchange name="rabbitmq-direct-exchange" durable="true" auto-delete="false"
+                            id="rabbitmq-direct-exchange">
+        <rabbit:bindings>
+            <!-- 绑定队列 -->
+            <rabbit:binding queue="directQueue" key="directQueue"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- 主题模式交换器定义 -->
+    <rabbit:topic-exchange name="rabbitmq-topic-exchange" durable="true" auto-delete="false"
+                           id="rabbitmq-topic-exchange">
+        <rabbit:bindings>
+            <!-- 绑定队列 -->
+            <rabbit:binding queue="topicQueue" pattern="rabbit.#"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <!-- 发布订阅模式交换器定义 -->
+    <rabbit:fanout-exchange name="rabbitmq-pubSub-exchange" durable="true" auto-delete="false"
+                            id="rabbitmq-pubSub-exchange">
+        <rabbit:bindings>
+            <!-- 绑定队列 -->
+            <rabbit:binding queue="pubSubQueue"/>
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
+
+    <!-- 定义消息监听器 -->
+    <bean id="queueListener" class="com.housoo.platform.system.listener.RabbitQueueReceiver"></bean>
+
+    <!-- 监听定义的消息队列   queues：监听的队列,有多个用,分隔  ref：监听器 -->
+    <rabbit:listener-container connection-factory="rabbitMqConnectionFactory" acknowledge="auto">
+        <rabbit:listener queues="simpleQueue,workQueue,topicQueue,directQueue,pubSubQueue" ref="queueListener"/>
+    </rabbit:listener-container>
+</beans>

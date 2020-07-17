@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd ">
+    <!-- 属性文件配置  -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:memcached.properties</value>
+                <!--<value>/WEB-INF/classes/memcached.properties</value>-->
+            </list>
+        </property>
+    </bean>
+    <!-- Memcached配置 -->
+    <bean id="memcachedPool" class="com.danga.MemCached.SockIOPool"
+          factory-method="getInstance" init-method="initialize" destroy-method="shutDown">
+        <property name="servers">
+            <!-- ${memcached.server} -->
+            <list>
+                <value>${memcached.server1}:${memcached.port1}</value>
+            </list>
+        </property>
+        <property name="initConn">
+            <value>${memcached.initConn}</value>
+        </property>
+        <property name="minConn">
+            <value>${memcached.minConn}</value>
+        </property>
+        <property name="maxConn">
+            <value>${memcached.maxConn}</value>
+        </property>
+        <property name="maintSleep">
+            <value>${memcached.maintSleep}</value>
+        </property>
+        <property name="nagle">
+            <value>${memcached.nagle}</value>
+        </property>
+        <property name="socketTO">
+            <value>${memcached.socketTO}</value>
+        </property>
+    </bean>
+</beans>

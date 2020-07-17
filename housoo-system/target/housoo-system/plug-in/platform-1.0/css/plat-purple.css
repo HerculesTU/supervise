@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+/*紫色主题*/
+
+/*导航*/
+.jquery-accordion-menu>ul>li>a {color: #677ae4;}
+.jquery-accordion-menu>ul>li>a:after{border-bottom-color: #e8ebfc;}
+.jquery-accordion-menu>ul>li.active>a,.jquery-accordion-menu>ul>li:hover>a{color: #677ae4; background: #e8ebfc;}
+/*二级*/
+.jquery-accordion-menu ul ul.submenu li a{background: #e8ebfc;}
+.jquery-accordion-menu ul ul.submenu li.active>a,.blue .jquery-accordion-menu ul ul.submenu li>a:hover {color: #fff; background: #677ae4;}
+
+/*布局样式*/
+.plat-Head,.footer{background: #677ae4;}
+.menu>.treeview.open>a{background: #4559c7;}
+.moresubmenu .active>.menuItem, .moresubmenu .menuItem:hover, .moresubmenu>.treeview>a.active, .moresubmenu>.treeview>a:hover{background:#677ae4;}
+.menu .popover-menu .active>.menuItem, .menu .popover-menu .menuItem:hover, .menu>.treeview.open>.dropdown-menu>.dropdown-submenu.open>a, .menu>.treeview.open>.dropdown-menu>.dropdown-submenu.open>.dropdown-menu>.dropdown-submenu.open>a ,.dropdown-menu>li>a:focus,.dropdown-menu>li>a:hover{background: #677ae4;}
+/*标签页*/
+.page-tabs-content>.menuTab.active{border-top: solid #677ae4 2px; color: #677ae4;}
+.lea-tabs .roll-nav{color: #677ae4;}
+.lea-tabs .roll-nav:hover{color:#4559c7;}
+.page-tabs-content>.menuTab{color: #666;}
+/*表格*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{background:#677ae4;}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{background: #e8ebfc;}
+.panel-Title .treepaneltip{color: #677ae4;}
+/*输入框选中输入边框色*/
+.n-valid{border: 1px solid #677ae4!important;}
+.form-control:focus {border-color: #677ae4;}
+/*下拉框组件选中样式*/
+.select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: #677ae4;}
+/*时间组件*/
+.jedateblue .jedatetop,.jedateblue .jedatebot .jedatebtn span,.jedateblue .jedaul li.action, .jedateblue .jedaul li.action:hover, .jedateblue .jedaul li.action .lunar{background: #677ae4;}
+/*tab标签*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{border-bottom: 3px solid #677ae4; color: #677ae4;}
+/*单选框样式*/
+.radio-success input[type="radio"]:checked+label::before{border-color: #677ae4;}
+.radio-success input[type="radio"]:checked+label::after{background-color: #677ae4;}
+.checkbox-success input[type="checkbox"]:checked+label::before, .checkbox-success input[type="radio"]:checked+label::before{background-color: #677ae4; border-color: #677ae4;}
+
+
+/*标题*/
+span.plat-current{color: #677ae4; border-bottom: 2px solid #677ae4;}
+/*bootstrap-switch*/
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success{background: #677ae4;}
+
+.plat-listgroup li.plat-listgroupon, .plat-listgroup li:hover{border-left: 3px solid #677ae4;}
+
+/*步骤条*/
+.plat-wizard ul li.active .step{color: #677ae4; border-color: #677ae4;}
+.plat-wizard ul li.active::before{background-color: #677ae4;}
+
+
+
+
+
+
+
+

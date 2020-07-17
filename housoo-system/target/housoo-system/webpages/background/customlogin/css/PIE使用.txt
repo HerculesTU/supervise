@@ -1,0 +1,4 @@
+写在相对应的CSS上   
+
+圆角：
+border-radius: 8px; behavior: url(css/PIE.htc);

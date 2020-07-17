@@ -1,0 +1,43 @@
+#MYSQL Version Config=======================
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3307/supervise?characterEncoding=utf-8&useUnicode=true&useOldAliasMetadataBehavior=true
+jdbc.username=root
+jdbc.password=root
+#=====================开始 druid 连接池配置信息===================
+druid.initialSize=5
+druid.minIdle=3
+druid.maxActive=20
+druid.maxWait=60000
+druid.timeBetweenEvictionRunsMillis=60000
+druid.minEvictableIdleTimeMillis=300000
+druid.maxPoolPreparedStatementPerConnectionSize=50
+druid.validationQuery=SELECT 'x' FROM DUAL
+#=====================结束 druid 连接池配置信息===================
+#====================如果数据库类型是MYSQL,请指定dbschema为数据库的名称====================
+dbschema=supervise
+#====================代码生成指向工程路径============================================
+genCodeProject=E:\\IntelliJIDEAWorkSpace\\supervise\\housoo-system\\src\\main\\
+templatePath=webapp\\webpages\\background\\appmodel\\codetpl\\javatpl\\
+#====================代码生成作者名称============================================
+genCodeAuthor=gf
+#====================附件上传到应用服务器的目录的磁盘根路径=======================================
+attachFilePath=E:\\IntelliJIDEAWorkSpace\\supervise\\housoo-system\\src\\main\\webapp\\attachfiles\\
+#====================回显上传应用服务器附件的访问根路径==============================
+attachFileUrl=http\://192.168.1.140/attachfiles/
+#================文件服务器的访问地址==================#
+fileServerUrl=http\://192.168.1.140\:80/
+#====================SM4密钥KEY代码==============================
+sm4secretkey=4028b8815ccf2ffe
+#====================SM4加密向量代码==============================
+sm4ivString=123qweasdzxc
+#====================邮件发送方地址===========================
+mail.from=2399645393@qq.com
+#====================邮件服务器地址=======================
+mail.host=smtp.qq.com
+#====================账号======================
+mail.username=2399645393@qq.com
+#====================密码======================
+mail.password=mrtlxidjtvnpebif
+#==============wkhtmltopdf的软件安装路径==============
+pdfGenerateSoftPath=D\:/MyProgram/wkhtmltopdf/bin
+

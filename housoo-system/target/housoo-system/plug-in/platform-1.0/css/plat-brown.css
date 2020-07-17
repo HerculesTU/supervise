@@ -1,0 +1,137 @@
+@charset "UTF-8";
+/*棕色主题*/
+/*导航*/
+.jquery-accordion-menu > ul > li > a {
+  color: #8d6658;
+}
+
+.jquery-accordion-menu > ul > li > a:after {
+  border-bottom-color: #f3f0ef;
+}
+
+.jquery-accordion-menu > ul > li.active > a, .jquery-accordion-menu > ul > li:hover > a {
+  color: #8d6658;
+  background: #f3f0ef;
+}
+
+/*二级*/
+.jquery-accordion-menu ul ul.submenu li a {
+  background: #f3f0ef;
+}
+
+.jquery-accordion-menu ul ul.submenu li.active > a, .blue .jquery-accordion-menu ul ul.submenu li > a:hover {
+  color: #fff;
+  background: #8d6658;
+}
+
+/*布局样式*/
+.plat-Head, .footer {
+  background: #8d6658;
+}
+
+.menu > .treeview.open > a {
+  background: #7f5c4f;
+}
+
+.moresubmenu .active > .menuItem, .moresubmenu .menuItem:hover, .moresubmenu > .treeview > a.active, .moresubmenu > .treeview > a:hover {
+  background: #8d6658;
+}
+
+.menu .popover-menu .active > .menuItem, .menu .popover-menu .menuItem:hover, .menu > .treeview.open > .dropdown-menu > .dropdown-submenu.open > a, .menu > .treeview.open > .dropdown-menu > .dropdown-submenu.open > .dropdown-menu > .dropdown-submenu.open > a, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+  background: #8d6658;
+}
+
+/*标签页*/
+.page-tabs-content > .menuTab.active {
+  border-top: solid #8d6658 2px;
+  color: #8d6658;
+}
+
+.lea-tabs .roll-nav {
+  color: #8d6658;
+}
+
+.lea-tabs .roll-nav:hover {
+  color: #7f5c4f;
+}
+
+.page-tabs-content > .menuTab {
+  color: #666;
+}
+
+/*表格*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  background: #8d6658;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background: #f3f0ef;
+}
+
+.panel-Title .treepaneltip {
+  color: #8d6658;
+}
+
+/*输入框选中输入边框色*/
+.n-valid {
+  border: 1px solid #8d6658 !important;
+}
+
+.form-control:focus {
+  border-color: #8d6658;
+}
+
+/*下拉框组件选中样式*/
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #8d6658;
+}
+
+/*时间组件*/
+.jedateblue .jedatetop, .jedateblue .jedatebot .jedatebtn span, .jedateblue .jedaul li.action, .jedateblue .jedaul li.action:hover, .jedateblue .jedaul li.action .lunar {
+  background: #8d6658;
+}
+
+/*tab标签*/
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+  border-bottom: 3px solid #8d6658;
+  color: #8d6658;
+}
+
+/*单选框&& 复选框*/
+.radio-success input[type=radio]:checked + label::before {
+  border-color: #8d6658;
+}
+
+.radio-success input[type=radio]:checked + label::after {
+  background-color: #8d6658;
+}
+
+.checkbox-success input[type=checkbox]:checked + label::before, .checkbox-success input[type=radio]:checked + label::before {
+  background-color: #8d6658;
+  border-color: #8d6658;
+}
+
+/*标题*/
+span.plat-current {
+  color: #8d6658;
+  border-bottom: 2px solid #8d6658;
+}
+
+/*bootstrap-switch*/
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success {
+  background: #8d6658;
+}
+
+.plat-listgroup li.plat-listgroupon, .plat-listgroup li:hover {
+  border-left: 3px solid #8d6658;
+}
+
+/*步骤条*/
+.plat-wizard ul li.active .step {
+  color: #8d6658;
+  border-color: #8d6658;
+}
+
+.plat-wizard ul li.active::before {
+  background-color: #8d6658;
+}

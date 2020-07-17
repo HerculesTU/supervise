@@ -1,0 +1,18 @@
+.Wdate {
+    background: url("ls_datly.png") right 5px center no-repeat;
+    border: 1px solid #f0e7e6;
+    color: #2a2929;
+    outline: none;
+    height: 28px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.Wdate:focus, .Wdate:active {
+    color: #573e41;
+}
+
+.WdateFmtErr {
+    font-weight: bold;
+    color: red;
+}

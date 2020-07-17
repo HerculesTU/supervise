@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.housoo.platform</groupId>
+        <artifactId>supervise</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.housoo.platform</groupId>
+    <artifactId>housoo-system</artifactId>
+    <packaging>war</packaging>
+    <name>housoo-system</name>
+
+    <!-- 依赖jar包 -->
+    <dependencies>
+        <dependency>
+            <groupId>jodd</groupId>
+            <artifactId>jodd</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/jodd-3.7.jar</systemPath>
+            <version>3.7</version>
+        </dependency>
+        <!-- PageOffice -->
+        <dependency>
+            <groupId>com.zhuozhengsoft</groupId>
+            <artifactId>pageoffice</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/pageoffice3.jar</systemPath>
+            <version>3.0</version>
+        </dependency>
+
+        <!-- dll动态链接库 -->
+        <dependency>
+            <groupId>com.jacob</groupId>
+            <artifactId>jacob</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/jacob-1.18-x64.dll</systemPath>
+            <version>1.18</version>
+            <type>dll</type>
+            <!--<excludes>
+                <exclude>*:dll*</exclude>
+            </excludes>-->
+        </dependency>
+        <dependency>
+            <groupId>org.hyperic</groupId>
+            <artifactId>sigar</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/sigar-amd64-winnt.dll</systemPath>
+            <version>1.6.4</version>
+            <type>dll</type>
+        </dependency>
+        <!-- so linux动态库 -->
+        <dependency>
+            <groupId>org.hyperic</groupId>
+            <artifactId>sigar</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/libsigar-amd64-linux.so</systemPath>
+            <version>1.6.4</version>
+            <type>so</type>
+        </dependency>
+        <dependency>
+            <groupId>org.hyperic</groupId>
+            <artifactId>sigar</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/libsigar-x86-linux.so</systemPath>
+            <version>1.6.4</version>
+            <type>so</type>
+        </dependency>
+        <dependency>
+            <groupId>com.danga</groupId>
+            <artifactId>memcached</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib-repository/memcached-2.6.6.jar</systemPath>
+            <version>2.6.6</version>
+        </dependency>
+
+        <!-- 核心模块 -->
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 公共模块 -->
+		<dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 验证码模块 -->
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-jcaptcha</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--appModel模块 -->
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-appmodel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 如果需要其他模块，可以单独引入 -->
+        <!-- 在线聊天IM模块 -->
+        <!--<dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-chatonline</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+        <!-- CMS模块 -->
+        <!--<dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-cms</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+        <!-- 数据服务模块 -->
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-metadata</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 微信模块 -->
+        <!--<dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-weixin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+        <!-- 工作流模块 -->
+        <!--<dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-workflow</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+        <!-- 单点登录模块 -->
+        <!--<dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-sso</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        &lt;!&ndash; Web网站分析模块 &ndash;&gt;
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-webstatistics</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+
+        <!--督查督办模块-->
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-supervise</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 测试模块 -->
+        <dependency>
+            <groupId>com.housoo.platform</groupId>
+            <artifactId>housoo-demo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.1.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- 编译部分 -->
+    <build>
+        <!--<filters>
+            <filter>src/main/resources/${filters.env}/config.properties</filter>
+        </filters>-->
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.tld</include>
+                </includes>
+                <excludes>
+                    <exclude>dev/*</exclude>
+                    <exclude>local/*</exclude>
+                    <exclude>prod/*</exclude>
+                    <exclude>test/*</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${profiles.active}</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.tld</include>
+                </includes>
+            </resource>
+        </resources>
+        <!--<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                  <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+                  <failOnMissingWebXml>false</failOnMissingWebXml>
+                  <overlays>
+                    <overlay>
+                        <groupId></groupId>
+                        <artifactId></artifactId>
+                    </overlay>
+                </overlays>
+                </configuration>
+            </plugin>
+        </plugins>-->
+    </build>
+
+    <!-- 定义不同版本 -->
+    <profiles>
+        <!-- 开发版本 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+                <package.environment>dev</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 本地版本 -->
+        <profile>
+            <id>local</id>
+            <properties>
+                <profiles.active>local</profiles.active>
+                <package.environment>local</package.environment>
+            </properties>
+             <!--<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>-->
+        </profile>
+        <!-- 生产版本 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+                <package.environment>prod</package.environment>
+            </properties>
+            <!-- <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation> -->
+        </profile>
+        <!-- 测试版本 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+                <package.environment>test</package.environment>
+            </properties>
+            <!-- <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation> -->
+        </profile>
+    </profiles>
+
+</project>

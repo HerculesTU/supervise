@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
+           http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.2.xsd"
+
+       default-autowire="byName" default-lazy-init="false">
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
+    <!-- 定义ehcache工厂 -->
+    <bean id="ehCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="ehCacheManager"></property>
+        <property name="cacheName" value="PlatSimpleMethodFilter"></property>
+    </bean>
+    <!-- find/create cache方法拦截器 -->
+    <bean id="methodCacheInterceptor" class="com.housoo.platform.core.ehcache.MethodCacheInterceptor">
+        <property name="cache" ref="ehCache"></property>
+    </bean>
+    <bean id="methodCachePointCut" class="com.housoo.platform.core.ehcache.SelectEhcacheList">
+        <property name="advice" ref="methodCacheInterceptor"></property>
+        <property name="patterns" value="  ">
+        </property>
+    </bean>
+    <!-- delete cache拦截器 -->
+    <bean id="methodCacheDelete" class="com.housoo.platform.core.ehcache.MethodCacheDelete">
+        <property name="cache" ref="ehCache"></property>
+    </bean>
+    <bean id="methodCachePointCutDelete" class="com.housoo.platform.core.ehcache.SelectDelEhcacheList">
+        <property name="advice" ref="methodCacheDelete"></property>
+        <property name="patterns" value="">
+        </property>
+    </bean>
+
+    <bean id="PlatEhcacheUtil" class="com.housoo.platform.core.util.PlatEhcacheUtil">
+        <property name="cache" ref="ehCache"></property>
+    </bean>
+</beans>

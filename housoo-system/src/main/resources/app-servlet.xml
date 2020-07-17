@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+    <!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
+    <context:component-scan base-package="com.housoo.platform.*.controller">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+
+    <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射， 配置一个基于注解的定制的WebBindingInitializer，解决日期转换问题，方法级别的处理器映射 -->
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="cacheSeconds" value="0"/>
+        <property name="messageConverters">
+            <list>
+                <!-- json转换器 -->
+                <ref bean="mappingJacksonHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+    <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用jsp) -->
+    <bean id="defaultViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:order="3">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="contentType" value="text/html"/>
+        <property name="prefix" value="/webpages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- freemarker和velocity配置 -->
+    <!--<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+    &lt;!&ndash; 配置freeMarker信息 &ndash;&gt;
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath">
+            <value>/WEB-INF/ftl/</value>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape" />
+            </map>
+        </property>
+        <property name="defaultEncoding">
+            <value>utf-8</value>
+        </property>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">3600</prop>
+            </props>
+        </property>
+    </bean>
+    &lt;!&ndash; 配置velocity信息 &ndash;&gt;
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        &lt;!&ndash; 这里的路径回合下面layoutUrl和prefix中的路径组合 &ndash;&gt;
+        <property name="resourceLoaderPath" value="/"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+            </props>
+        </property>
+    </bean>-->
+
+    <!-- 配置多个视图解析 -->
+    <!--
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="viewResolvers">
+            <list>
+                &lt;!&ndash; 配置html视图解析器 &ndash;&gt;
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass" value="com.housoo.platform.core.util.HtmlResourceView"/>
+                    <property name="prefix" value="/WEB-INF/html/"/>
+                    <property name="suffix" value=".html"/>
+                    &lt;!&ndash; 注意：自定义的HTML一定要比JSP的优先级高，即order要小，否则HTML的页面会被解析成jsp &ndash;&gt;
+                    <property name="order" value="0" />
+                </bean>
+                &lt;!&ndash; 配置freeMarker视图解析器 &ndash;&gt;
+                <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+                    <property name="contentType" value="text/html; charset=utf-8"/>
+                    <property name="cache" value="true" />
+                    <property name="suffix" value=".ftl" />
+                    &lt;!&ndash; 注意：自定义的HTML一定要比JSP的优先级高，即order要小，否则freeMarker的页面会被解析成jsp &ndash;&gt;
+                    <property name="order" value="1"/>
+                </bean>
+                &lt;!&ndash; 配置velocity视图解析器 &ndash;&gt;
+                <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+                    <property name="cache" value="true"/>
+                    &lt;!&ndash; velocity的order要小于jsp的,velocity和html的order优先级大小无所谓，都能正常解析并显示 &ndash;&gt;
+                    <property name="order" value="2"/>
+                    <property name="suffix" value=".vm"/>
+                    &lt;!&ndash; 这里的路径会加上resourceLoaderPath的路径 &ndash;&gt;
+                    <property name="layoutUrl" value="/WEB-INF/velocity/layout/default.vm"/>
+                    <property name="prefix" value="/WEB-INF/velocity/"/>
+                    <property name="contentType" value="text/html;charset=UTF-8"/>
+                </bean>
+                &lt;!&ndash; 配置jsp视图解析器 &ndash;&gt;
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+                    <property name="prefix" value="/WEB-INF/jsp/"/>
+                    <property name="suffix" value=".jsp"/>
+                    &lt;!&ndash; 注意：JSP的优先级要最低，即order要大，否则HTML、freeMarker、velocity的页面会被解析到*.jsp &ndash;&gt;
+                    <property name="order" value="3" />
+                </bean>
+            </list>
+        </property>
+    </bean>-->
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8">
+        <property name="maxUploadSize">
+            <value>1073741824</value>
+        </property>
+    </bean>
+
+    <!-- 权限url拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*/*.do"/>
+            <mvc:mapping path="/*/*/*.do"/>
+            <bean class="com.housoo.platform.core.security.AuthInterceptor">
+                <property name="backLoginUrl">
+                    <value>security/LoginController/goBackLogin.do</value>
+                </property>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

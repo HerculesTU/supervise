@@ -1,0 +1,71 @@
+.bTabs {
+    height: 100%;
+    overflow: auto;
+}
+.bTabs button.navTabsCloseBtn {
+    font-size: 23px !important;
+    cursor: pointer;
+
+    margin-left: 10px;
+    font-style: normal;
+    line-height: 20px;
+    font-family: inherit;
+    font-weight: normal;
+
+    position: relative;
+    color: #AAAAAA;
+
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+
+    float: right;
+    line-height: 1;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.bTabs button.navTabsCloseBtn:hover {
+    color: red !important;
+    font-weight: 700;
+}
+
+.bTabs .nav-tabs {
+    padding-left: 10px;
+    margin-top: 5px;
+}
+
+.bTabs .nav-tabs > li {
+    margin-right: 5px;
+    border-top: 1px solid #ddd;
+}
+
+.bTabs .nav-tabs > li.active {
+    border-top: 1px solid transparent;
+}
+
+.bTabs .nav-tabs > li > a {
+    padding: 5px 20px;
+    color: #666666;
+    border-radius: 0;
+    margin-right: 0;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-top: 5px solid transparent;
+    border-bottom: 0;
+}
+.bTabs .nav-tabs li.active a {
+    color: #e13d3b;
+    border-top: 5px solid #e13d3b;
+}
+
+.bTabs .nav-tabs li.active a button.navTabsCloseBtn {
+    color: #666666;
+}
+/*.bTabs div.tab-content {
+    margin: 10px;
+}*/
+.bTabs div.tab-content div.tab-pane {
+    height: 100%;
+}

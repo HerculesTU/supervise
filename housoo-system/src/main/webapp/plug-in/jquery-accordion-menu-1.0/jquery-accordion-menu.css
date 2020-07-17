@@ -1,0 +1,218 @@
+.jquery-accordion-menu,.jquery-accordion-menu * {
+	outline: 0
+}
+
+.jquery-accordion-menu {
+	width: 100%;
+	float: left;
+	position: relative;
+}
+
+.jquery-accordion-menu .jquery-accordion-menu-footer,.jquery-accordion-menu .jquery-accordion-menu-header {
+	width: 100%;
+	height: 50px;
+	padding-left: 22px;
+	float: left;
+	line-height: 50px;
+	font-weight: 600;
+	color: #f0f0f0;
+	background: #414956
+}
+
+.jquery-accordion-menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+
+.jquery-accordion-menu ul li {
+	width: 100%;
+	display: block;
+	float: left;
+	position: relative
+}
+
+.jquery-accordion-menu ul li a {
+	width: 100%;
+	padding: 12px 15px;
+	float: left;
+	text-decoration: none;
+	font-size: 14px;
+	background: #fff;
+	white-space: nowrap;
+	position: relative;
+	overflow: hidden;
+	-o-transition: color .2s linear,background .2s linear;
+	-moz-transition: color .2s linear,background .2s linear;
+	-webkit-transition: color .2s linear,background .2s linear;
+	transition: color .2s linear,background .2s linear
+}
+
+.jquery-accordion-menu>ul>li.active>a,.jquery-accordion-menu>ul>li:hover>a {
+	color: #AD1E24;
+	background: #f1c5c5
+}
+
+.jquery-accordion-menu ul ul.submenu li.active>a,.blue .jquery-accordion-menu ul ul.submenu li>a:hover {
+	color: #AD1E24;
+	background: #f1c5c5
+}
+
+.jquery-accordion-menu>ul>li>a:after {
+	content: "";
+	position: absolute;
+	left: 15px;
+	right: 15px;
+	bottom: 0px;
+	border-bottom: solid 1px #3b424d
+}
+
+.jquery-accordion-menu ul li a i {
+	width: 30px;
+	float: left;
+	line-height: 18px;
+	font-size: 16px;
+	text-align: left
+}
+
+.jquery-accordion-menu .submenu-indicator {
+	float: right;
+	right: 22px;
+	font-family: "宋体";
+	position: absolute;
+	line-height: 19px;
+	font-size: 20px;
+	font-weight: bold;
+	-o-transition: transform .3s linear;
+	-moz-transition: transform .3s linear;
+	-webkit-transition: transform .3s linear;
+	-ms-transition: transform .3s linear
+}
+
+.jquery-accordion-menu .submenu-indicator-minus>.submenu-indicator {
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg)
+}
+
+.jquery-accordion-menu ul ul.submenu,.jquery-accordion-menu ul ul.submenu li ul.submenu {
+	width: 100%;
+	display: none;
+	position: static
+}
+
+.jquery-accordion-menu ul ul.submenu li {
+	clear: both;
+	width: 100%
+}
+
+.jquery-accordion-menu ul ul.submenu li a {
+	width: 100%;
+	float: left;
+	color: #555;
+	position: relative;
+	-o-transition: border .2s linear;
+	-moz-transition: border .2s linear;
+	-webkit-transition: border .2s linear;
+	transition: border .2s linear
+}
+
+.jquery-accordion-menu ul ul.submenu>li>a {
+	padding-left: 30px
+}
+
+.jquery-accordion-menu ul ul.submenu>li>ul.submenu>li>a {
+	padding-left: 45px
+}
+
+.jquery-accordion-menu ul ul.submenu>li>ul.submenu>li>ul.submenu>li>a {
+	padding-left: 60px
+}
+
+.jquery-accordion-menu ul li .jquery-accordion-menu-label,.jquery-accordion-menu ul ul.submenu li .jquery-accordion-menu-label {
+	min-width: 20px;
+	padding: 1px 2px 1px 1px;
+	position: absolute;
+	right: 18px;
+	top: 14px;
+	font-size: 11px;
+	font-weight: 800;
+	color: #555;
+	text-align: center;
+	line-height: 18px;
+	background: #f0f0f0;
+	border-radius: 100%
+}
+
+.jquery-accordion-menu ul ul.submenu li .jquery-accordion-menu-label {
+	top: 16px
+}
+
+.jquery-accordion-menu>ul>li>a>.ink {
+	background: rgba(0,0,0,.1)
+}
+
+.ink {
+	display: block;
+	position: absolute;
+	background: rgba(255,255,255,.3);
+	border-radius: 100%;
+	-webkit-transform: scale(0);
+	-moz-transform: scale(0);
+	-ms-transform: scale(0);
+	-o-transform: scale(0);
+	transform: scale(0)
+}
+
+.animate-ink {
+	-webkit-animation: ripple .5s linear;
+	-moz-animation: ripple .5s linear;
+	-ms-animation: ripple .5s linear;
+	-o-animation: ripple .5s linear;
+	animation: ripple .5s linear
+}
+
+@-webkit-keyframes ripple {
+	100% {
+		opacity: 0;
+		-webkit-transform: scale(2.5)
+	}
+}
+
+@-moz-keyframes ripple {
+	100% {
+		opacity: 0;
+		-moz-transform: scale(2.5)
+	}
+}
+
+@-o-keyframes ripple {
+	100% {
+		opacity: 0;
+		-o-transform: scale(2.5)
+	}
+}
+
+@keyframes ripple {
+	100% {
+		opacity: 0;
+		transform: scale(2.5)
+	}
+}
+
+
+/*绿色*/
+.jquery-accordion-menu>ul>li>a {
+	color: #d43635;
+}
+.jquery-accordion-menu>ul>li>a:after {
+	border-bottom-color: #ffe9f1;
+}
+/*二级*/
+.jquery-accordion-menu ul ul.submenu li a {
+	/*background: #e4fcf0;*/
+	background: rgba(212,54,53,0.2);
+}
+
+

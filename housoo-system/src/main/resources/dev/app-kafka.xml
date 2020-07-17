@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 定义producer的参数 -->
+    <bean id="producerProperties" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="${kafka.producer.bootstrap.servers}" />
+                <entry key="group.id" value="${kafka.consumer.group.id}" />
+                <entry key="retries" value="${kafka.producer.retries}" />
+                <entry key="batch.size" value="${kafka.producer.batch.size}" />
+                <entry key="linger.ms" value="${kafka.producer.linger.ms}" />
+                <entry key="buffer.memory" value="${kafka.producer.buffer.memory}" />
+                <entry key="acks" value="${kafka.producer.acks}" />
+                <entry key="key.serializer"
+                       value="${kafka.producer.key.serializer}" />
+                <entry key="value.serializer"
+                       value="${kafka.producer.value.serializer}"/>
+
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!-- 定义consumer的参数 -->
+    <bean id="consumerProperties" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="${kafka.consumer.bootstrap.servers}" />
+                <entry key="client.id" value="ClientZHL1"/>
+                <entry key="group.id" value="${kafka.consumer.group.id}" />
+                <entry key="enable.auto.commit" value="${kafka.consumer.enable.auto.commit}" />
+                <entry key="session.timeout.ms" value="${kafka.consumer.session.timeout.ms}" />
+                <entry key="auto.commit.interval.ms" value="${kafka.consumer.auto.commit.interval.ms}" />
+                <entry key="retry.backoff.ms" value="100" />
+                <entry key="key.deserializer"
+                       value="${kafka.consumer.key.deserializer}" />
+                <entry key="value.deserializer"
+                       value="${kafka.consumer.value.deserializer}" />
+            </map>
+        </constructor-arg>
+    </bean>
+
+     <!--创建kafkatemplate需要使用的producerfactory bean-->
+    <bean id="producerFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
+        <constructor-arg>
+            <ref bean="producerProperties"/>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- 创建kafkatemplate bean，使用的时候，只需要注入这个bean，即可使用template的send消息方法 -->
+    <bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+        <constructor-arg ref="producerFactory"/>
+        <constructor-arg name="autoFlush" value="true"/>
+        <property name="defaultTopic" value="${kafka.producer.defaultTopic}"/>
+    </bean>
+
+
+    <!-- 创建consumerFactory bean -->
+    <bean id="consumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg>
+            <ref bean="consumerProperties"/>
+        </constructor-arg>
+    </bean>
+
+    <!-- 实际执行消息消费的类 -->
+    <bean id="kafkaReceiver" class="com.housoo.platform.system.listener.KafkaReceiver"/>
+
+    <!-- 消费者容器配置信息 -->
+    <bean id="containerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <constructor-arg value="${kafka.producer.defaultTopic}"/>
+        <property name="messageListener" ref="kafkaReceiver"/>
+    </bean>
+
+    <!-- 创建kafkatemplate bean，使用的时候，只需要注入这个bean，即可使用template的send消息方法   -->
+    <bean id="messageListenerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer" init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="containerProperties"/>
+    </bean>
+</beans>

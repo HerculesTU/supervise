@@ -1,0 +1,5 @@
+com\housoo\platform\common\dao\CommonDao.class
+com\housoo\platform\common\controller\BaseController.class
+com\housoo\platform\common\service\CommonService.class
+com\housoo\platform\common\dao\impl\CommonDaoImpl.class
+com\housoo\platform\common\service\impl\CommonServiceImpl.class

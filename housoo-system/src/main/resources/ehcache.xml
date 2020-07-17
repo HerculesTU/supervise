@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false">
+    <diskStore path="java.io.tmpdir"/>
+    <defaultCache eternal="false"
+                  maxElementsInMemory="1000"
+                  overflowToDisk="true"
+                  diskPersistent="false"
+                  timeToIdleSeconds="300"
+                  timeToLiveSeconds="6000"
+                  memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="shiro-activeSessionCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <!--
+    eternal:表示是否永恒存在;
+    maxElementsInMemory:缓存最大个数;
+    overflowToOffHeap:boolean类型，默认为false。表示是否允许Cache使用非堆内存进行存储，非堆内存是不受Java GC影响的。该属性只对企业版Ehcache有用;
+    timeToIdleSeconds:单位是秒，表示一个元素所允许闲置的最大时间，也就是说一个元素在不被请求的情况下允许在缓存中待的最大时间。默认是0，表示不限制;
+    timeToLiveSeconds:单位是秒，表示无论一个元素闲置与否，其允许在Cache中存在的最大时间。默认是0，表示不限制;
+    memoryStoreEvictionPolicy:默认是LRU（最近最少使用），可选值还有LFU（最不常使用）和FIFO（先进先出）;
+     -->
+    <cache name="PlatSimpleMethodFilter"
+           eternal="false"
+           maxElementsInMemory="3600"
+           overflowToDisk="true"
+           timeToIdleSeconds="7200"
+           timeToLiveSeconds="7200"
+           memoryStoreEvictionPolicy="LRU"/>
+
+</ehcache>

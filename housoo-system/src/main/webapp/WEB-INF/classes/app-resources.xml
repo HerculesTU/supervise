@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
+           http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.2.xsd"
+
+       default-autowire="byName" default-lazy-init="false">
+    <context:annotation-config/>
+    <!-- 配置包扫描路径 -->
+    <context:component-scan base-package="com.housoo"
+                            annotation-config="true"/>
+    <!-- 事物性相关配置 -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+    <bean id="txManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <aop:config>
+        <aop:pointcut id="servicePointCut"
+                      expression="execution(* com.housoo.platform.*.service..*(..))"/>
+        <aop:pointcut id="servicePointCut2"
+                      expression="execution(* com.housoo.platform.core.service..*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointCut"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointCut2"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="is*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置JDBC属性文件路径 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config.properties</value>
+                <!--<value>classpath:kafka.properties</value>-->
+            </list>
+        </property>
+    </bean>
+    <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">
+        <property name="dir" value="META-INF/druid/wall/oracle"/>
+        <property name="commentAllow" value="true"/>
+    </bean>
+
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <property name="dbType" value="oracle"/>
+        <property name="config" ref="wall-filter-config"/>
+    </bean>
+    <!-- 开始配置druid的连接池 -->
+    <bean id="defaultDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <!-- 最小空闲连接数 -->
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <!-- 最大空闲连接数 -->
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${druid.maxWait}"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="${druid.validationQuery}"/>
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="true"/>
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="false"/>
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="false"/>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
+        <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计-->
+        <property name="filters" value="stat"/>
+        <!--
+        <property name="proxyFilters">
+          <list>
+              <ref bean="wall-filter"/>
+          </list>
+      </property>
+      -->
+    </bean>
+
+    <!-- 动态数据源配置 -->
+    <bean id="dataSource" class="com.housoo.platform.core.dynadatasource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="defaultDataSource" value-ref="defaultDataSource"></entry>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="defaultDataSource"></property>
+    </bean>
+
+    <!-- 数据源动态切换切面配置 -->
+    <aop:config>
+        <aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor" order="1">
+            <!-- 拦截所有service实现类的方法 -->
+            <aop:pointcut id="dataSourcePointcut"
+                          expression="execution(* com.housoo.platform.*.service..*(..))"/>
+            <aop:before pointcut-ref="dataSourcePointcut" method="intercept"/>
+            <!--
+            <aop:after pointcut-ref="dataSourcePointcut" method="afterIntercept" />
+            -->
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 数据源动态切换实体 -->
+    <bean id="dataSourceInterceptor" class="com.housoo.platform.core.dynadatasource.DynamicDataSourceInterceptor"/>
+
+    <!-- 配置ORACLE大文本配置 -->
+    <bean id="lobHandler" lazy-init="true"
+          class="org.springframework.jdbc.support.lob.OracleLobHandler">
+        <property name="nativeJdbcExtractor">
+            <ref bean="nativeJdbcExtractor"/>
+        </property>
+    </bean>
+    <bean id="nativeJdbcExtractor" lazy-init="true"
+          class="org.springframework.jdbc.support.nativejdbc.SimpleNativeJdbcExtractor"/>
+
+    <!-- 国际化配置 -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="cacheSeconds" value="0"/>
+        <property name="basenames">
+            <list>
+                <!--<value>classpath:message_zh_CN</value>-->
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <!-- 引入应用程序工具类 -->
+    <bean id="platUtil" class="com.housoo.platform.core.util.PlatAppUtil"/>
+    <!-- 全局异常捕捉器 -->
+    <bean id="exceptionResolver" class="com.housoo.platform.core.web.servlet.OverallExceptionResolver"></bean>
+</beans>
